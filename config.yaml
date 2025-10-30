@@ -1,0 +1,32 @@
+search:
+  date_from: '2019-01-01'
+  date_to: '2024-12-31'
+  language: 'English'
+  sources:
+    - pubmed
+    - ieee
+    - crossref
+    - google_scholar
+    - github
+    - zenodo
+  queries:
+    ieee: '(classification OR "classification" OR "classifier" OR accuracy OR f1 OR sensitivity OR specificity) AND ("EEG" OR "electroencephalography" OR "brain-computer interface" OR "BCI") AND ("deep learning" OR "neural network" OR "CNN" OR "RNN" OR "LSTM" OR "transformer")'
+    pubmed: '((classification[Title/Abstract] OR classifier[Title/Abstract] OR accuracy[Title/Abstract]) AND ("electroencephalography"[MeSH Terms] OR "EEG" OR "brain computer interface") AND ("2019"[Date - Publication] : "2024"[Date - Publication]))'
+    google_scholar: 'EEG classification "brain-computer interface" (CNN OR LSTM OR transformer OR classifier) 2019..2024'
+  exclude_sources:
+    - arxiv
+
+dedupe:
+  doi_regex: '\\b10\\.\\d{4,9}/[-._;()/:A-Z0-9]+\\b'
+  fuzzy_threshold_exact: 0.92
+  fuzzy_threshold_candidate: 0.85
+  human_review_threshold_low: 0.80
+
+output:
+  artifacts_dir: 'artifacts'
+  prisma_json: 'artifacts/prisma_counts.json'
+  csv: 'artifacts/records_deduped.csv'
+  bib: 'artifacts/included.bib'
+
+logging:
+  level: INFO
